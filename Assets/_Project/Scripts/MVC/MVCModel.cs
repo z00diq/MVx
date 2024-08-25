@@ -1,34 +1,34 @@
-﻿using Assets._Project.Scripts.MVP.Views;
-
-namespace Assets._Project.Scripts.MVP.Models
+﻿namespace Assets._Project.Scripts.MVC
 {
-    public abstract class Model
+    public  class MVCModel
     {
         private int _intValue;
         private string _stringValue;
-        protected readonly View View;
+        private MVCView _view;
 
         public int IntValue => _intValue;
 
-        public Model(View view) 
+        public MVCModel(MVCView view) 
         { 
-            View = view;
+            _view = view;
             _intValue = 0;
             _stringValue = string.Empty;
 
-            view.ReDraw(_intValue,_stringValue);
+            view.RedrawIntText(_intValue);
+            view.RedrawStringText(_stringValue);
+
         }
 
         public void ChangeIntValue(int value)
         {
             _intValue = value;
-            View.ReDraw(_intValue);
+            _view.RedrawIntText(_intValue);
         }
 
         public void SetStringValue(string value)
         {
             _stringValue = value;
-            View.ReDraw(_stringValue);
+            _view.RedrawStringText(_stringValue);
         }
     }
 }

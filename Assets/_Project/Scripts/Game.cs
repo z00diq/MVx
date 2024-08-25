@@ -1,25 +1,21 @@
-﻿using Assets._Project.Scripts.MVP.Presenters;
+﻿using Assets._Project.Scripts.MVP;
+using Assets._Project.Scripts.MVC;
 using Assets._Project.Scripts.MVVM;
 using UnityEngine;
 using UnityEngine.UI;
-using SimpleModel = Assets._Project.Scripts.Models.SimpleModel;
-using View = Assets._Project.Scripts.Views.View;
-using MVVMSimpleModel = Assets._Project.Scripts.MVVM.SimpleModel;
-using MVVMView = Assets._Project.Scripts.MVVM.View;
-using static UnityEditor.Profiling.HierarchyFrameDataView;
 
 namespace Assets._Project.Scripts
 {
     public class Game: MonoBehaviour
     {
         [Header("MVC")]
-        [SerializeField] private View _view;
+        [SerializeField] private MVCView _view;
         [SerializeField] private Button _plus;
         [SerializeField] private Button _minus;
         [SerializeField] private InputField _input;
         
         [Header("MVP")]
-        [SerializeField] private MVP.Views.View _mvpView;
+        [SerializeField] private MVPView _mvpView;
 
         [Header("MVVM")]
         [SerializeField] private MVVMView _mvvmView;
@@ -28,19 +24,19 @@ namespace Assets._Project.Scripts
 
         private void Awake()
         {
-            SimpleModel model = new SimpleModel(_view);
-            SimpleController simpleController = new SimpleController(_view, model);
+            MVCModel model = new MVCModel(_view);
+            MVCController simpleController = new MVCController(_view, model);
 
             _plus.onClick.AddListener(simpleController.IncrementintValue);
             _minus.onClick.AddListener(simpleController.DecrementintValue);
             _input.onValueChanged.AddListener(simpleController.ChangeString);
 
-            MVP.Models.SimpleModel MVPModel = new MVP.Models.SimpleModel(_mvpView);
-            SimplePresenter simplePresenter = new SimplePresenter(MVPModel);
+            MVPModel MVPModel = new MVPModel(_mvpView);
+            MVPPresenter simplePresenter = new MVPPresenter(MVPModel);
             _mvpView.Constrtuct(simplePresenter);
 
-            MVVMSimpleModel MVVMsimpleModel = new MVVMSimpleModel();
-            SimpleViewModel viewModel = new SimpleViewModel(MVVMsimpleModel);
+            MVVMModel MVVMsimpleModel = new MVVMModel();
+            MVVMViewModel viewModel = new MVVMViewModel(MVVMsimpleModel);
             _mvvmView.Construct(viewModel);
             viewModel.Initialize();
         }

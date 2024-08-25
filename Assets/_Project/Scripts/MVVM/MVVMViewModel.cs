@@ -1,13 +1,13 @@
 ﻿namespace Assets._Project.Scripts.MVVM
 {
-    public abstract class ViewModel
+    public class MVVMViewModel
     {
-        protected readonly Model _model;
+        protected readonly MVVMModel _model;
 
         public readonly ReactiveProperty<int> IntValueView = new();
         public readonly ReactiveProperty<string> StringValueView = new();
 
-        public ViewModel(Model model)
+        public MVVMViewModel(MVVMModel model)
         {
             _model = model;
 

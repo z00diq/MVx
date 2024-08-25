@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 namespace Assets._Project.Scripts.MVVM
 {
-    public class SimpleView : View
+    public class MVVMView: MonoBehaviour
     {
         [SerializeField] private Text _intText;
         [SerializeField] private Text _stringText;
@@ -12,9 +12,13 @@ namespace Assets._Project.Scripts.MVVM
         [SerializeField] private Button _minus;
         [SerializeField] private Button _submit;
 
-        public override void Construct(ViewModel viewModel)
+        private MVVMViewModel ViewModel;
+
+        public void Construct(MVVMViewModel viewModel)
         {
-            base.Construct(viewModel);
+            ViewModel = viewModel;
+            ViewModel.StringValueView.OnChanged += OnStringValueViewChanged;
+            ViewModel.IntValueView.OnChanged += OnIntValueViewChanged;
             _plus.onClick.AddListener(ViewModel.OnIntValueViewIncreaseButtonClick);
             _minus.onClick.AddListener(ViewModel.OnIntValueViewDecreaseButtonClick);
             _submit.onClick.AddListener(ViewModel.OnSubmitButtonClicled);
@@ -29,12 +33,12 @@ namespace Assets._Project.Scripts.MVVM
             _inputField.onEndEdit.RemoveListener(ViewModel.OnStringValueViewEndEdit);
         }
 
-        protected override void OnIntValueViewChanged(int value)
+        private  void OnIntValueViewChanged(int value)
         {
             _intText.text = value.ToString();
         }
 
-        protected override void OnStringValueViewChanged(string value)
+        private void OnStringValueViewChanged(string value)
         {
             _stringText.text = value;
         }
